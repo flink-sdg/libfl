@@ -2,7 +2,7 @@ CC = gcc
 
 BUILD = build
 HEADERS = h
-LIBFL = flarr fldict flutil fltime
+LIBFL = flarr fldict flutil fltime flbits
 LIBFL_O = ${addprefix ${BUILD}/, ${addsuffix .o,${LIBFL}}}
 
 define COMPILE
@@ -17,7 +17,7 @@ endef
 build: dirs libflh ${BUILD}/libfl.a main
 
 clean:
-	rm -rf ./${BUILD}; rm -rf ./${HEADERS}; rm main
+	rm -rf ./${BUILD}; rm -rf ./${HEADERS}; rm -f main
 
 clean-build: clean build
 

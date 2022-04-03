@@ -11,6 +11,7 @@ typedef struct {
 } flarr;
 
 flarr* flarr_new(size_t);
+void flarr_clean(flarr*);
 
 void flarr_append(flarr*, void*);
 void flarr_append_char(flarr*, char);

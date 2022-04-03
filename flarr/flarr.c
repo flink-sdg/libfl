@@ -6,7 +6,7 @@
 
 
 /*
- *	Create a new flarr for any item type.
+ *	Create and clean up flarrs.
  */
 
 
@@ -26,6 +26,11 @@ flarr* flarr_new(size_t item_size)
 	return flarray;
 }
 
+void flarr_clean(flarr *flarray)
+{
+	free(flarray->items);
+	free(flarray);
+}
 
 
 /*
@@ -181,14 +186,14 @@ FLARR_REVERSE(flarr_reverse_size_t, size_t *)
 { \
 	char *temp = malloc(5242880 * sizeof(char)); \
 \
-	sprintf(temp, "\n\nitems: {"); \
+	sprintf(temp, "items: {"); \
 \
 	for(size_t i = 0; i < flarray->items_count; ++i) \
 	{ \
 		sprintf(temp + strlen(temp), r, ((t)flarray->items)[i]); \
 	} \
 \
-	sprintf(temp + strlen(temp), "}\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld\n\n\n", flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size); \
+	sprintf(temp + strlen(temp), "}\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld", flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size); \
 \
 	char *string = calloc(strlen(temp) + 1, sizeof(char)); \
 	strcpy(string, temp); \
@@ -205,7 +210,7 @@ char* flarr_to_string(flarr *flarray)
 {
 	char *temp = malloc(5242880 * sizeof(char));
 
-	sprintf(temp, "\n\nitems: %p\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld\n\n\n", flarray->items, flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size);
+	sprintf(temp, "items: %p\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld", flarray->items, flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size);
 
 	char *string = calloc(strlen(temp) + 1, sizeof(char));
 	strcpy(string, temp);
@@ -218,7 +223,7 @@ char* flarr_to_string_str(flarr *flarray)
 {
 	char *temp = malloc(5242880 * sizeof(char));
 
-	sprintf(temp, "\n\nitems: %s\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld\n\n\n", (char *)flarray->items, flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size);
+	sprintf(temp, "items: %s\nitem_size: %ld\nitems_count: %ld\nitems_size: %ld\nitems_bytes: %ld", (char *)flarray->items, flarray->item_size, flarray->items_count, flarray->items_size, flarray->items_size * flarray->item_size);
 
 	char *string = calloc(strlen(temp) + 1, sizeof(char));
 	strcpy(string, temp);
